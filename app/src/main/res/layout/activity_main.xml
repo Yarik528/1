@@ -19,14 +19,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Загрузка..."
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="32dp"/>
 
-    <Button
-        android:id="@+id/btnCopy"
+    <!-- Контейнер для кнопок, чтобы они были рядом или друг под другом -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Копировать IP" />
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Копировать IP"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnRefresh"
+            style="?attr/materialButtonOutlinedStyle" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Обновить IP"/>
+            
+    </LinearLayout>
 
 </LinearLayout>
