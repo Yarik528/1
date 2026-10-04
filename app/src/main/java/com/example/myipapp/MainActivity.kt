@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tvIp: TextView
     private lateinit var btnCopy: Button
+    private lateinit var btnRefresh: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +26,25 @@ class MainActivity : AppCompatActivity() {
 
         tvIp = findViewById(R.id.tvIp)
         btnCopy = findViewById(R.id.btnCopy)
+        btnRefresh = findViewById(R.id.btnRefresh)
 
+        // Запускаем получение IP при старте
         fetchIpAddress()
 
+        // Обработчик кнопки копирования
         btnCopy.setOnClickListener {
             val ip = tvIp.text.toString()
-            if (ip != "Загрузка..." && ip != "Ошибка" && ip != "Нет интернета") {
+            if (ip != "Загрузка..." && !ip.startsWith("Ошибка") && ip != "Нет интернета") {
                 copyToClipboard(ip)
+            } else {
+                Toast.makeText(this, "Сначала дождитесь загрузки IP", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        // Обработчик кнопки обновления
+        btnRefresh.setOnClickListener {
+            tvIp.text = "Обновление..."
+            fetchIpAddress()
         }
     }
 
@@ -53,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 } else {
                     withContext(Dispatchers.Main) {
-                        tvIp.text = "Ошибка сервера"
+                        tvIp.text = "Ошибка сервера ($responseCode)"
                     }
                 }
             } catch (e: Exception) {
